@@ -21,16 +21,16 @@ _epang_soft_dir = get_software_dir(config, PlacementSoftware.EPANG)
 _alignment_dir = get_software_dir(config, AlignmentSoftware.HMMER)
 
 _epang_h1_place_benchmark_template = get_benchmark_template(config, PlacementSoftware.EPANG,
-                                                            p="pruning", length="length", g="g", heuristic="h1",
+                                                            p="pruning", length="length", g="g", heuristic="h1", memsave="off",
                                                             rule_name="placement") if cfg.get_mode(config) == cfg.Mode.RESOURCES else ""
 _epang_h2_place_benchmark_template = get_benchmark_template(config, PlacementSoftware.EPANG,
-                                                            p="pruning", length="length", bigg="bigg", heuristic="h2",
+                                                            p="pruning", length="length", bigg="bigg", heuristic="h2", memsave="off",
                                                             rule_name="placement") if cfg.get_mode(config) == cfg.Mode.RESOURCES else ""
 _epang_h3_place_benchmark_template = get_benchmark_template(config, PlacementSoftware.EPANG,
-                                                            p="pruning", length="length", heuristic="h3",
+                                                            p="pruning", length="length", heuristic="h3", memsave="off",
                                                             rule_name="placement") if cfg.get_mode(config) == cfg.Mode.RESOURCES else ""
 _epang_h4_place_benchmark_template = get_benchmark_template(config, PlacementSoftware.EPANG,
-                                                            p="pruning", length="length", heuristic="h4",
+                                                            p="pruning", length="length", heuristic="h4", memsave="off",
                                                             rule_name="placement") if cfg.get_mode(config) == cfg.Mode.RESOURCES else ""
 
 epang_benchmark_templates = [
@@ -71,8 +71,11 @@ def _make_epang_command(**kwargs) -> str:
     else:
         heuristic_option = "--no-heur "
 
+    # use different epa-ng binary if specified
+    epang = config["config_epang"]["executable"] if config["config_epang"]["executable"] else "epa-ng"
+
     # make the EPA-NG command
-    epang_command = "epa-ng " \
+    epang_command = epang + " " \
                     "--redo " \
                     + premask_option + \
                     "--preserve-rooting on " \
@@ -86,6 +89,7 @@ def _make_epang_command(**kwargs) -> str:
                     "--ref-msa {input.r} " \
                     "-T 1 " \
                     "-m {input.m} " \
+                    "--memsave {wildcards.memsave} " \
                     "&> {log.logfile}"
 
     # make a resulting sequence of commands
