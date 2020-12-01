@@ -110,6 +110,8 @@ config_epang:
   h4:
     options: none    #reserved if any option appears in future versions
 
+  memsave_mode: "auto"
+
   #pre-masking, 1=yes, 0=no
   premask: 1
 
