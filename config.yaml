@@ -112,6 +112,8 @@ config_epang:
 
   memsave_mode: "auto"
 
+  maxmem: ""
+
   #pre-masking, 1=yes, 0=no
   premask: 1
 

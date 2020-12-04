@@ -54,13 +54,13 @@ def get_experiment_dir_template(config: Dict, software: PlacementSoftware, **kwa
         assert heuristic and heuristic in valid_heuristics, f"{heuristic} is not a valid heuristic."
 
         if heuristic == "h1":
-            return os.path.join(software_dir, input_set_dir_template, "h1", "g{g}", "mem_{memsave}",
+            return os.path.join(software_dir, input_set_dir_template, "h1", "g{g}", "mem{mem}",
                                 get_common_queryname_template(config))
         elif heuristic == "h2":
-            return os.path.join(software_dir, input_set_dir_template, "h2", "bigg{bigg}", "mem_{memsave}",
+            return os.path.join(software_dir, input_set_dir_template, "h2", "bigg{bigg}", "mem{mem}",
                                 get_common_queryname_template(config))
         elif heuristic in ("h3", "h4"):
-            return os.path.join(software_dir, input_set_dir_template, heuristic, "mem_{memsave}",
+            return os.path.join(software_dir, input_set_dir_template, heuristic, "mem{mem}",
                                 get_common_queryname_template(config))
     elif software == PlacementSoftware.PPLACER:
         return os.path.join(software_dir, input_set_dir_template, "ms{ms}_sb{sb}_mp{mp}")
@@ -147,11 +147,11 @@ def get_queryname_template(config: Dict, software: PlacementSoftware, **kwargs) 
         assert heuristic and heuristic in valid_heuristics, f"{heuristic} is not a valid heuristic."
 
         if heuristic == "h1":
-            return get_common_queryname_template(config) + "_h1_g{g}_mem_{memsave}"
+            return get_common_queryname_template(config) + "_h1_g{g}_mem_{mem}"
         elif heuristic == "h2":
-            return get_common_queryname_template(config) + "_h2_bigg{bigg}_mem_{memsave}"
+            return get_common_queryname_template(config) + "_h2_bigg{bigg}_mem_{mem}"
         elif heuristic in ("h3", "h4"):
-            return get_common_queryname_template(config) + "_" + heuristic + "_mem_{memsave}"
+            return get_common_queryname_template(config) + "_" + heuristic + "_mem_{mem}"
     elif software == PlacementSoftware.PPLACER:
         return get_common_queryname_template(config) + "_ms{ms}_sb{sb}_mp{mp}"
     elif software == PlacementSoftware.APPLES:
@@ -196,7 +196,7 @@ def get_output_template_args(config: Dict, software: PlacementSoftware, **kwargs
             template_args["bigg"] = config["config_epang"]["h2"]["G"]
 
         # set the desired memory saver modes
-        template_args["memsave"] = config["config_epang"]["memsave_mode"]
+        template_args["mem"] = config["config_epang"]["maxmem"]
     elif software == PlacementSoftware.PPLACER:
         template_args["ms"] = config["config_pplacer"]["max-strikes"]
         template_args["sb"] = config["config_pplacer"]["strike-box"]
