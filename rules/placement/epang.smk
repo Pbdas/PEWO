@@ -94,7 +94,7 @@ def _make_epang_command(**kwargs) -> str:
                     "-T 1 " \
                     "-m {input.m} " \
                     + maxmem_option + \
-                    + chunk_size + \
+                    chunk_size + \
                     "&> {log.logfile}"
 
     # make a resulting sequence of commands
