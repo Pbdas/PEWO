@@ -76,6 +76,8 @@ def _make_epang_command(**kwargs) -> str:
     # use different epa-ng binary if specified
     epang = config["config_epang"]["executable"] if config["config_epang"]["executable"] else "epa-ng"
 
+    chunk_size = "--chunk-size " + config["config_epang"]["chunk_size"] if config["config_epang"]["chunk_size"] else ""
+
     # make the EPA-NG command
     epang_command = epang + " " \
                     "--redo " \
@@ -92,6 +94,7 @@ def _make_epang_command(**kwargs) -> str:
                     "-T 1 " \
                     "-m {input.m} " \
                     + maxmem_option + \
+                    + chunk_size + \
                     "&> {log.logfile}"
 
     # make a resulting sequence of commands
