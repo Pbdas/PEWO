@@ -95,7 +95,7 @@ def _make_epang_command(**kwargs) -> str:
                     "-m {input.m} " \
                     + maxmem_option + \
                     chunk_size + \
-                    "&> {log.logfile}"
+                    " &> {log.logfile}"
 
     # make a resulting sequence of commands
     return ";\n".join(c for c in ["mkdir -p {params.tmpdir}",

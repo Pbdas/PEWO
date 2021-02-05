@@ -111,7 +111,7 @@ config_epang:
     options: none    #reserved if any option appears in future versions
 
   memsave_mode: "auto"
-
+  chunk_size: ""
   maxmem: ""
 
   #pre-masking, 1=yes, 0=no
